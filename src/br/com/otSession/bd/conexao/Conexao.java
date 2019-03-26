@@ -1,6 +1,7 @@
 package br.com.otSession.bd.conexao;
 
 import java.sql.Connection;
+//import java.sql.DriverManager;
 
 public class Conexao {
 
@@ -10,7 +11,8 @@ public class Conexao {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");	//Possível causador de problema no futuro
-			conexao = java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/agendacontato", "root", "as");
+			conexao = java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/otSession", "root", "as");
+//		    conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/otSession?user=root&password=as");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
