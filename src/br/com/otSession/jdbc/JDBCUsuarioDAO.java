@@ -13,10 +13,10 @@ public class JDBCUsuarioDAO {
 		this.conexao = conexao;
 	}
 
-	public boolean validarUsuario(String usuario) {
+	public boolean validarUsuario(String usuario, String senha) {
 		try {
 
-			String comando = "SELECT usuario FROM usuarios WHERE usuario = " + usuario + ";";
+			String comando = "SELECT usuario FROM usuarios WHERE usuario = '" + usuario + "' AND senha = '" + senha + "';";
 			Statement stmt = conexao.createStatement();
 			ResultSet rs = stmt.executeQuery(comando);
 

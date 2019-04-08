@@ -10,15 +10,12 @@ public class Conexao {
 	public Connection abrirConexao() {
 
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");	//Possível causador de problema no futuro
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			conexao = java.sql.DriverManager.getConnection("jdbc:mysql://localhost:3306/otSession", "root", "as");
-//		    conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/otSession?user=root&password=as");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return conexao;
-
 	}
 
 	public void fecharConexao() {
