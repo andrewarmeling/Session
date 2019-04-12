@@ -1,20 +1,27 @@
-document.getElementById("botao-login").onclick = function() {
-    var validado = validarInput();
-    var senhaCodificada = codificar(document.getElementById("senha").value);
-    
-}
+$(document).ready(function () {
 
-function validarInput() {
-    var usuario = document.getElementById("usuario").value;
-    var senha = document.getElementById("senha").value;
+    var $usuario = $('#usuario');
+    var $senha = $('#senha');
 
-    if(usuario != "" && usuario != null && senha != "" && senha != null) {
-        return true;
-    } else {
-        return false;
-    }
-}
+    $('#botao-login').click(function(){
+    	
+        var $senhaCodificada = btoa($senha.val());
+        
+        var dados = {
+            usuario: $usuario.val(),
+            senha: $senhaCodificada
+        };
+        
+        $.ajax({
+            type: "POST",
+            url: "/Session/login",
+            data: dados,
+            success: function (response) {
+                alert("ok");
+            }
 
-function codificar(senha) {
-    return (btoa(senha));
-}
+        });
+
+    });
+
+});
