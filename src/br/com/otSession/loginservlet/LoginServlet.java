@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.lang.Object;
+
 import br.com.otSession.bd.conexao.Conexao;
 import br.com.otSession.jdbc.JDBCUsuarioDAO;
 
@@ -24,33 +26,35 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		System.out.println("Get");
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("Post");
-		
+
 		Conexao conec = new Conexao();
 		Connection conexao = conec.abrirConexao();
-				
+
 //		System.out.println(objetoDAO.validarUsuario(request.getParameter("usuario"), request.getParameter("senha")));
 
 		System.out.println("usuario: " + request.getParameter("usuario"));
 		System.out.println("senha Base64: " + request.getParameter("senha"));
-		
-		String senhaMD5 = request.getParameter("senha");
-		MessageDigest md = null;
+
+		String senhaB64 = request.getParameter("senha");
 		try {
-			md = MessageDigest.getInstance("MD5");
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(senhaB64.getBytes());
+			byte[] codificado = md.digest();
+			BigInteger hex = new BigInteger(1, codificado);
+			String hashMD5 = hex.toString(16);
+			while (hashMD5.length() < 32) {
+				hashMD5 = 0 + hashMD5;
+			}
+			System.out.println("senha Base64 + MD5: " + hashMD5);
 		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		
-		md.update(senhaMD5.getBytes("UTF-8"), 0, senhaMD5.length());
-		
-//		System.out.println("MD5: " + new BigInteger(1, md.digest()).toString());
-		System.out.println("MD5: " + md.digest().toString());
-		
+
 //		if (objetoDAO.validarUsuario(request.getParameter("usuario"), request.getParameter("senha"))) {
 //			HttpSession sessao = request.getSession();
 //			sessao.setAttribute("login", request.getParameter("usuario"));
@@ -58,6 +62,6 @@ public class LoginServlet extends HttpServlet {
 //		} else {
 //			response.sendRedirect("/Session/index.html");
 //		}
-		
+
 	}
 }
