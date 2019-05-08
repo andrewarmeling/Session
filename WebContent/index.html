@@ -6,8 +6,7 @@
         <div class="divlogin">
             <fieldset class="fieldset">
                 <legend>Login</legend>
-                <!-- <form name="input" action="login" method="post"> -->
-                <form id="formulario" method="POST">
+                <form method="POST" onsubmit="return onSubmit()">
                     <div>
                         Usuário: 
                         <input id="usuario" type="text" name="usuario">
@@ -17,7 +16,7 @@
                         <input id="senha" type="text" name="senha">
                     </div>
                     <div>
-                        <input id="botao-login" type="submit" value="Entrar">
+                        <input type="submit" value="Entrar">
                     </div>
                 </form>
             </fieldset>
